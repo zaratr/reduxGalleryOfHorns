@@ -1,25 +1,79 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import Main from './Main'
+import data from './data.json';
+import { Modal, Form } from 'react-bootstrap';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component
+{
+  constructor(props)//constructor constructs functionality in the code and props gives you the access to the parent. 
+  //both are needed and pass to the super in the hierarchy
+  {
+    super(props)
+    this.state ={
+      filteredData : data
+      //beast: {}
+      //beast: '',
+      //image_url: '',
+      //description: '',
+      //title: ''
+    }
+  }
+
+  handleSelect = event => {
+    let choice = event.target.value;
+
+    if (choice === 'single') {
+      let newData = data?.filter(animal => animal.horns === 1);
+      console.log("here apphandleone", newData);
+      this.setState({filteredData: newData});
+    }
+    else if (choice === 'few') {
+      let newData = data?.filter(animal => animal.horns > 1 && animal.horns < 100);
+      console.log("here apphandle", newData);
+      this.setState({filteredData: newData});
+    }
+    else if (choice === 'many') {
+      let newData = data?.filter(animal => animal.horns >= 100);
+      console.log("here apphandle many", newData);
+      this.setState({filteredData: newData});
+    } 
+    else {
+      this.setState({
+        filteredData: data
+      })
+    }
+  }
+
+
+  render(){
+    return (
+      <>
+        <Header />
+        <div className="beast-layout">
+          <Form>
+            <Form.Label>Filter the beasts:</Form.Label>
+            <Form.Select
+              name="select"
+              onChange={this.handleSelect}>
+              <option value="all">All Beasts</option>
+              <option value="many">Many Horns</option>
+              <option value="few">Few Horns</option>
+              <option value="single">Single Horns</option>
+            </Form.Select>
+          </Form>
+          <Main
+            data={this.state.filteredData}
+            showModalHandler={this.showModalHandler}
+          />
+        </div>
+        <Footer />
+      </>
+    )
+  }
 }
+
 
 export default App;
