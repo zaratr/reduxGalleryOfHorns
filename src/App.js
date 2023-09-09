@@ -8,9 +8,7 @@ import { Modal, Form } from 'react-bootstrap';
 
 class App extends React.Component
 {
-  constructor(props)//constructor constructs functionality in the code and props gives you the access to the parent. 
-  //both are needed and pass to the super in the hierarchy
-  {
+  constructor(props){
     super(props)
     this.state ={
       filteredData : data
