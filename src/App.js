@@ -2,7 +2,8 @@ import './App.css';
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Main from './Main'
+import Main from './Main';
+import MyNav from './MyNav'
 import data from './data.json';
 import { Modal, Form } from 'react-bootstrap';
 
@@ -18,6 +19,14 @@ class App extends React.Component
       //description: '',
       //title: ''
     }
+  }
+
+  parentHandler = (newFilteredData) => {
+    console.log("filteredD:", newFilteredData);
+    if(newFilteredData === null)
+      this.setState({filteredData:data})
+    else
+      this.setState({filteredData:newFilteredData})
   }
 
   handleSelect = event => {
@@ -49,6 +58,7 @@ class App extends React.Component
   render(){
     return (
       <>
+        <MyNav parentHandler = {this.parentHandler}/>
         <Header />
         <div className="beast-layout">
           <Form>

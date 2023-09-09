@@ -10,10 +10,8 @@ import "./Main.css";
 
 class Main extends React.Component
 {
-    constructor(props)//constructor gains access to use props
-    {
-        super(props);//uses this to pass the values. if super() will make all undefined but they exist.
-        // Must use super(props) to gain the values
+    constructor(props){
+        super(props);
         this.state = {
             showModal: false,
             //data: this.props.data,
@@ -48,7 +46,6 @@ class Main extends React.Component
     {
             return (
                 <main style={this.mainStyle}>
-                    {console.log("here main", this.props.data )}
                     <SelectedBeast
                     showModal={this.state.showModal}
                     hideModal={this.hideModal}
