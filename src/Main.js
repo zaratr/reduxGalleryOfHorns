@@ -82,6 +82,6 @@ class Main extends React.Component
 
 
 const mapStateToProps = (state) => ({
-  filteredData: state.filteredData
+  filteredData: state.filter.filteredData
 });
 export default connect(mapStateToProps)(Main);

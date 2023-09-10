@@ -40,6 +40,7 @@ class App extends React.Component
     else if (choice === 'many') newData = data?.filter(animal => animal.horns >= 100);
     
     // this.setState({filteredData: newData});
+    console.log("here", newData);
     this.props.dispatch(setFilteredData(newData));
   }
 
@@ -62,8 +63,9 @@ class App extends React.Component
               <option value="single">Single Horns</option>
             </Form.Select>
           </Form>
+          {console.log("test",this.props)}
           <Main
-            filteredData={this.props.filteredData}
+            // filteredData={this.props.filteredData}
             // showModalHandler={this.showModalHandler}
           />
         </div>
@@ -72,5 +74,8 @@ class App extends React.Component
     )
   }
 }
+const mapStateToProps = (state) => ({
+  filteredData: state.filter.filteredData
+});
 
-export default connect()(App);
+export default connect(mapStateToProps)(App);

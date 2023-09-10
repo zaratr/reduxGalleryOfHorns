@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import data from '../data.json'
 
-const filterSlice = createSlice({
+export const filterSlice = createSlice({
   name: 'filter',
   initialState: {
     filteredData: data,
