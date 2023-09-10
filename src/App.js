@@ -22,7 +22,6 @@ class App extends React.Component
   }
 
   parentHandler = (newFilteredData) => {
-    console.log("filteredD:", newFilteredData);
     if(newFilteredData === null)
       this.setState({filteredData:data})
     else
