@@ -1,34 +1,28 @@
 import { useState } from 'react';
 import {Button, Offcanvas, Dropdown, Form} from 'react-bootstrap';
 import data from './data.json';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilteredData } from './redux/filteredReducer';
 
 function MyNav(props) {
   const [show, setShow] = useState(false);
-  const [filteredData, setFilteredData] = useState(data); // Initialize with the full data
+  //const [filteredData, setFilteredData] = useState(data);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const dispatch = useDispatch();
+  const filteredData = useSelector((state) => state.filter.filteredData);
+
   const handleSelect = (event) => {
     const choice = event.target.value;
+    let newData = data;
 
-    if (choice === 'single') {
-      const newData = data.filter((animal) => animal.horns === 1);
-      setFilteredData(newData);
-    } else if (choice === 'few') {
-      const newData = data.filter(
-        (animal) => animal.horns > 1 && animal.horns < 100
-      );
-      setFilteredData(newData);
-    } else if (choice === 'many') {
-      const newData = data.filter((animal) => animal.horns >= 100);
-      setFilteredData(newData);
-    } 
-    else {
-      setFilteredData(data);
-    }
-    props.parentHandler(filteredData);
+    if (choice === 'single') newData = data.filter((animal) => animal.horns === 1);
+    else if (choice === 'few') newData = data.filter((animal) => animal.horns > 1 && animal.horns < 100);
+    else if (choice === 'many') newData = data.filter((animal) => animal.horns >= 100);
+
+    dispatch(setFilteredData(newData))
   };
   return (
     <>

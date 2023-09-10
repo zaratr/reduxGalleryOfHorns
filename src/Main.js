@@ -8,6 +8,8 @@ import HornedBeast from "./HornedBeast";
 import SelectedBeast from './SelectedBeast';
 import "./Main.css";
 
+import {connect} from 'react-redux';
+
 class Main extends React.Component
 {
     constructor(props){
@@ -44,6 +46,8 @@ class Main extends React.Component
     }   
     render()
     {
+
+        {console.log("filteredData:", this.props);}
             return (
                 <main style={this.mainStyle}>
                     <SelectedBeast
@@ -55,7 +59,7 @@ class Main extends React.Component
                     />
                     <Container>
                         <Row xs={1} md={3} lg={4}>
-                            {this.props.data?.map((animal, index) =>(
+                            {this.props.filteredData?.map((animal, index) =>(
                                 <Col key={index}>
                                     <HornedBeast 
                                     title={animal.title}
@@ -75,4 +79,9 @@ class Main extends React.Component
         );
     }
 }
-export default Main;
+
+
+const mapStateToProps = (state) => ({
+  filteredData: state.filteredData
+});
+export default connect(mapStateToProps)(Main);

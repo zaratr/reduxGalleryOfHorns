@@ -6,20 +6,23 @@ import Main from './Main';
 import MyNav from './MyNav'
 import data from './data.json';
 import { Modal, Form } from 'react-bootstrap';
+import { setFilteredData } from './redux/filteredReducer';
+import { connect } from 'react-redux';
+
 
 class App extends React.Component
 {
-  constructor(props){
-    super(props)
-    this.state ={
-      filteredData : data
+  // constructor(props){
+    // super(props)
+    // this.state ={
+      // filteredData : data
       //beast: {}
       //beast: '',
       //image_url: '',
       //description: '',
       //title: ''
-    }
-  }
+    // }
+  // }
 
   parentHandler = (newFilteredData) => {
     if(newFilteredData === null)
@@ -30,33 +33,21 @@ class App extends React.Component
 
   handleSelect = event => {
     let choice = event.target.value;
+    let newData = data;
 
-    if (choice === 'single') {
-      let newData = data?.filter(animal => animal.horns === 1);
-      console.log("here apphandleone", newData);
-      this.setState({filteredData: newData});
-    }
-    else if (choice === 'few') {
-      let newData = data?.filter(animal => animal.horns > 1 && animal.horns < 100);
-      console.log("here apphandle", newData);
-      this.setState({filteredData: newData});
-    }
-    else if (choice === 'many') {
-      let newData = data?.filter(animal => animal.horns >= 100);
-      console.log("here apphandle many", newData);
-      this.setState({filteredData: newData});
-    } 
-    else {
-      this.setState({
-        filteredData: data
-      })
-    }
+    if (choice === 'single') newData = data?.filter(animal => animal.horns === 1);
+    else if (choice === 'few') newData = data?.filter(animal => animal.horns > 1 && animal.horns < 100);
+    else if (choice === 'many') newData = data?.filter(animal => animal.horns >= 100);
+    
+    // this.setState({filteredData: newData});
+    this.props.dispatch(setFilteredData(newData));
   }
 
 
   render(){
     return (
       <>
+      {console.log("app fildata:", this.props.filteredData)}
         <MyNav parentHandler = {this.parentHandler}/>
         <Header />
         <div className="beast-layout">
@@ -72,8 +63,8 @@ class App extends React.Component
             </Form.Select>
           </Form>
           <Main
-            data={this.state.filteredData}
-            showModalHandler={this.showModalHandler}
+            filteredData={this.props.filteredData}
+            // showModalHandler={this.showModalHandler}
           />
         </div>
         <Footer />
@@ -82,5 +73,4 @@ class App extends React.Component
   }
 }
 
-
-export default App;
+export default connect()(App);
